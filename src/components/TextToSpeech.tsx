@@ -17,7 +17,7 @@ interface VoicesResponse {
 const fetcher = (url: string) => fetch(url,{
   headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer  samawong@20181214',
+      Authorization: 'Bearer  '+process.env.API_KEY,
   },
 }).then((res) => res.json());
 
@@ -76,7 +76,7 @@ export default function TextToSpeech() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer  samawong@20181214'
+          'Authorization': 'Bearer  '+process.env.API_KEY
         },
         body: JSON.stringify({
           "input": text,
@@ -149,7 +149,7 @@ export default function TextToSpeech() {
           {/* Gender Select */}
           <div>
             <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
-              选择性别
+              选择男女声
             </label>
             <select
               id="gender"
@@ -158,7 +158,7 @@ export default function TextToSpeech() {
               disabled={!selectedLanguage || isLoading}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">请选择性别...</option>
+              <option value="">请选择男女声...</option>
               {genders.map((gender) => (
                 <option key={gender} value={gender}>
                   {gender}
