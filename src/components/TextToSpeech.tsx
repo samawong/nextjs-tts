@@ -14,12 +14,17 @@ interface VoicesResponse {
   voices: Voice[];
 }
 
-const fetcher = (url: string) => fetch(url,{
+const fetcher = (url: string) => fetch(url, {
   headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer  '+process.env.NEXT_PUBLIC_API_KEY,
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY || ''}`
   },
-}).then((res) => res.json());
+}).then((res) => {
+  if (!res.ok) {
+    throw new Error('API request failed');
+  }
+  return res.json();
+});
 
 export default function TextToSpeech() {
   const { data, isLoading } = useSWR<VoicesResponse>('/api/voices', fetcher);
@@ -76,7 +81,7 @@ export default function TextToSpeech() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer  '+process.env.NEXT_PUBLIC_API_KEY
+           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY || ''}`
         },
         body: JSON.stringify({
           "input": text,
@@ -87,6 +92,8 @@ export default function TextToSpeech() {
       });
   
       if (!response.ok) {
+        const errorData = await response.text();
+  console.error('API Error:', response.status, errorData);
         throw new Error('转换请求失败');
       }
   
