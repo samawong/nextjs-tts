@@ -4,11 +4,11 @@ const nextConfig = {
         return [
             {
                 source: '/api/voices',
-                destination: 'http://192.168.123.250:5050/v1/voices'
+                destination: 'https://civil-willie-samawong-07bedc4e.koyeb.app/v1/voices'
             },
             {
                 source: '/api/convert',
-                destination: 'http://192.168.123.250:5050/v1/audio/speech'
+                destination: 'https://civil-willie-samawong-07bedc4e.koyeb.app/v1/audio/speech'
             }
         ]
     },
