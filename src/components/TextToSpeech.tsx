@@ -17,7 +17,7 @@ interface VoicesResponse {
 const fetcher = (url: string) => fetch(url,{
   headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer  '+process.env.API_KEY,
+      Authorization: 'Bearer  '+process.env.NEXT_PUBLIC_API_KEY,
   },
 }).then((res) => res.json());
 
@@ -76,7 +76,7 @@ export default function TextToSpeech() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer  '+process.env.API_KEY
+          'Authorization': 'Bearer  '+process.env.NEXT_PUBLIC_API_KEY
         },
         body: JSON.stringify({
           "input": text,
