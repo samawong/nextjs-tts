@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
 interface Voice {
   ShortName: string;
   LocalName: string;
@@ -15,9 +17,10 @@ interface VoicesResponse {
 }
 
 const fetcher = (url: string) => fetch(url, {
+  
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY || ''}`
+    'Authorization': `Bearer ${apiKey}`
   },
 }).then((res) => {
   if (!res.ok) {
@@ -77,12 +80,14 @@ export default function TextToSpeech() {
 
     try {
       setConverting(true);
-      const response = await fetch('/api/convert', {
+      const response = await fetch('/api/audio/speech', {
         method: 'POST',
+        
         headers: {
           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY || ''}`
+           'Authorization': `Bearer ${apiKey}`
         },
+        
         body: JSON.stringify({
           "input": text,
           "model": 'tts-1',
